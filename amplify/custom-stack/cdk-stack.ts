@@ -6,7 +6,7 @@ import { readFileSync } from "fs";
 import * as path from "path";
 
 interface ModifyAuthStackProps extends cdk.StackProps {
-    // userPoolId: string;
+    userPoolId?: string;
 }
 
 export class ModifyAuthStack extends cdk.Stack {
