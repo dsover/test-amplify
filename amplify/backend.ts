@@ -10,16 +10,16 @@ const backend = defineBackend({
     data,
 });
 
-// const customNotifications = new ModifyAuthStack(
-//     backend.createStack("ModifyAuthStack"),
-//     "ModifyAuthStack",
-//     { 
-//       // userPoolId: backend.auth.resources.userPool.userPoolId 
-//     }
-// ); 
-// backend.addOutput({
-//   custom:{
-//     userPoolId: customNotifications.userPoolClient.attrClientId,
-//     token: customNotifications.userPoolClient.attrClientSecret
-//   }
-// })
+const customNotifications = new ModifyAuthStack(
+    backend.createStack("ModifyAuthStack"),
+    "ModifyAuthStack",
+    { 
+      // userPoolId: backend.auth.resources.userPool.userPoolId 
+    }
+); 
+backend.addOutput({
+  custom:{
+    userPoolId: customNotifications.userPoolClient.attrClientId,
+    token: customNotifications.userPoolClient.attrClientSecret
+  }
+})

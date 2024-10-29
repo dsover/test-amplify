@@ -8,11 +8,11 @@ import {
   ChallengeNameType,
   ListUsersCommand,
   ListGroupsCommand,
-  AdminSetUserPasswordCommand,
+  // AdminSetUserPasswordCommand,
   AdminDisableUserCommand,
   AdminEnableUserCommand,
   AdminCreateUserCommand,
-  AdminAddUserToGroupCommand,
+  // AdminAddUserToGroupCommand,
   AdminListUserAuthEventsCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 import * as crypto from 'crypto';
