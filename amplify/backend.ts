@@ -14,7 +14,7 @@ const customNotifications = new ModifyAuthStack(
     backend.createStack("ModifyAuthStack"),
     "ModifyAuthStack",
     { 
-      // userPoolId: backend.auth.resources.userPool.userPoolId 
+      userPoolId: 'us-east-1_ldJRRhqwA'// backend.auth.resources.userPool.userPoolId 
     }
 ); 
 backend.addOutput({
