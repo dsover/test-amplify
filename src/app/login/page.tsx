@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
@@ -19,7 +19,7 @@ export default function LoginPage() {
     const [resetCodeInput, setResetCodeInput] = useState("");
 
     const router = useRouter();
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
     const login = async (u: string, p: string) => {
         console.log("login", u, p);
@@ -31,7 +31,7 @@ export default function LoginPage() {
         const response = await signIn("credentials", {
             username: u.toLowerCase(),
             password: p,
-            callbackUrl: searchParams.get("callbackUrl") || "/",
+            callbackUrl: "/", //searchParams.get("callbackUrl") || "/",
             redirect: false,
         });
         console.log("response", response);
@@ -186,148 +186,136 @@ export default function LoginPage() {
     };
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <div>
             <div>
                 <div>
                     <div>
                         <div>
-                            <div>
-                                {newPasswordRequired ? (
-                                    <>
-                                        <text>Please set a new password</text>
+                            {newPasswordRequired ? (
+                                <>
+                                    <text>Please set a new password</text>
 
-                                        <input
-                                            placeholder="Password"
-                                            type="password"
-                                            onChange={(e) =>
-                                                setNewPasswordInput(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={newPasswordInput}
-                                            disabled={isLoggingIn}
-                                        />
-                                    </>
-                                ) : initiateForgotPassword ? (
-                                    <>
-                                        <text>
-                                            Enter your username to reset your
-                                            password
-                                        </text>
-
-                                        <input
-                                            placeholder="Username"
-                                            onChange={(e) =>
-                                                setUsername(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={username}
-                                            disabled={isLoggingIn}
-                                        />
-                                    </>
-                                ) : resetCodeRequired ? (
-                                    <>
-                                        <text>
-                                            Enter the reset code sent to your
-                                            email address and set a new password
-                                        </text>
-
-                                        <input
-                                            placeholder="Reset Code"
-                                            type="number"
-                                            autoComplete="off"
-                                            inputMode="numeric"
-                                            onChange={(e) =>
-                                                setResetCodeInput(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={resetCodeInput}
-                                            disabled={isLoggingIn}
-                                        />
-                                        <input
-                                            placeholder="New Password"
-                                            type="password"
-                                            onChange={(e) =>
-                                                setPassword(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={password}
-                                            disabled={isLoggingIn}
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        <text>
-                                            Sign in with your username and
-                                            password
-                                        </text>
-
-                                        <input
-                                            placeholder="Username"
-                                            onChange={(e) =>
-                                                setUsername(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={username}
-                                            disabled={isLoggingIn}
-                                        />
-                                        <input
-                                            placeholder="Password"
-                                            type="password"
-                                            onChange={(e) =>
-                                                setPassword(
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            value={password}
-                                            disabled={isLoggingIn}
-                                        />
-                                    </>
-                                )}
-                                {loginError && (
-                                    <text color="red">{loginError}</text>
-                                )}
-
-                                <button
-                                    color="var(--oap-teal)"
-                                    onClick={handleLogin}
-                                    style={{
-                                        border: "rgb(0, 0, 0, 0.2) solid 1px",
-                                    }}
-                                >
+                                    <input
+                                        placeholder="Password"
+                                        type="password"
+                                        onChange={(e) =>
+                                            setNewPasswordInput(
+                                                e.currentTarget.value
+                                            )
+                                        }
+                                        value={newPasswordInput}
+                                        disabled={isLoggingIn}
+                                    />
+                                </>
+                            ) : initiateForgotPassword ? (
+                                <>
                                     <text>
-                                        {isLoggingIn
-                                            ? ``
-                                            : newPasswordRequired
-                                            ? `Set Password`
-                                            : initiateForgotPassword
-                                            ? `Send Reset Code`
-                                            : resetCodeRequired
-                                            ? `Confirm`
-                                            : `Login`}
+                                        Enter your username to reset your
+                                        password
                                     </text>
-                                </button>
-                                {newPasswordRequired ||
-                                initiateForgotPassword ||
-                                resetCodeRequired ? null : (
-                                    <a onClick={handleForgotPwdClick}>
-                                        Forgot Password
-                                    </a>
-                                )}
-                            </div>
+
+                                    <input
+                                        placeholder="Username"
+                                        onChange={(e) =>
+                                            setUsername(e.currentTarget.value)
+                                        }
+                                        value={username}
+                                        disabled={isLoggingIn}
+                                    />
+                                </>
+                            ) : resetCodeRequired ? (
+                                <>
+                                    <text>
+                                        Enter the reset code sent to your email
+                                        address and set a new password
+                                    </text>
+
+                                    <input
+                                        placeholder="Reset Code"
+                                        type="number"
+                                        autoComplete="off"
+                                        inputMode="numeric"
+                                        onChange={(e) =>
+                                            setResetCodeInput(
+                                                e.currentTarget.value
+                                            )
+                                        }
+                                        value={resetCodeInput}
+                                        disabled={isLoggingIn}
+                                    />
+                                    <input
+                                        placeholder="New Password"
+                                        type="password"
+                                        onChange={(e) =>
+                                            setPassword(e.currentTarget.value)
+                                        }
+                                        value={password}
+                                        disabled={isLoggingIn}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <text>
+                                        Sign in with your username and password
+                                    </text>
+
+                                    <input
+                                        placeholder="Username"
+                                        onChange={(e) =>
+                                            setUsername(e.currentTarget.value)
+                                        }
+                                        value={username}
+                                        disabled={isLoggingIn}
+                                    />
+                                    <input
+                                        placeholder="Password"
+                                        type="password"
+                                        onChange={(e) =>
+                                            setPassword(e.currentTarget.value)
+                                        }
+                                        value={password}
+                                        disabled={isLoggingIn}
+                                    />
+                                </>
+                            )}
+                            {loginError && (
+                                <text color="red">{loginError}</text>
+                            )}
+
+                            <button
+                                color="var(--oap-teal)"
+                                onClick={handleLogin}
+                                style={{
+                                    border: "rgb(0, 0, 0, 0.2) solid 1px",
+                                }}
+                            >
+                                <text>
+                                    {isLoggingIn
+                                        ? ``
+                                        : newPasswordRequired
+                                        ? `Set Password`
+                                        : initiateForgotPassword
+                                        ? `Send Reset Code`
+                                        : resetCodeRequired
+                                        ? `Confirm`
+                                        : `Login`}
+                                </text>
+                            </button>
+                            {newPasswordRequired ||
+                            initiateForgotPassword ||
+                            resetCodeRequired ? null : (
+                                <a onClick={handleForgotPwdClick}>
+                                    Forgot Password
+                                </a>
+                            )}
                         </div>
                     </div>
-                    <text>
-                        Having trouble logging in or need to request a new
-                        login?
-                    </text>
-                    <text>Contact OpenAP at product_support@openap.tv</text>
                 </div>
+                <text>
+                    Having trouble logging in or need to request a new login?
+                </text>
+                <text>Contact OpenAP at product_support@openap.tv</text>
             </div>
-        </Suspense>
+        </div>
     );
 }
