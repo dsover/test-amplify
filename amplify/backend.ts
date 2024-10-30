@@ -19,7 +19,7 @@ const customNotifications = new ModifyAuthStack(
 ); 
 backend.addOutput({
   custom:{
-    userPoolId: customNotifications.userPoolClient.attrClientId,
+    userPoolClientId: customNotifications.userPoolClient.attrClientId,
     token: customNotifications.userPoolClient.attrClientSecret
   }
 })

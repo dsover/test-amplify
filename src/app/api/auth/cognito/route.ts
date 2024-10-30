@@ -19,10 +19,8 @@ import {
 import * as crypto from 'crypto';
 
 import awsConfig from "../../../../../amplify_outputs.json";
-const cognitoClientId =process.env.COGNITO_CLIENT_ID || "";
-    // awsConfig?.custom?.userPoolId || process.env.COGNITO_CLIENT_ID || "";
-const cognitoClientSecret =process.env.COGNITO_CLIENT_SECRET || "";
-    // awsConfig?.custom?.token || process.env.COGNITO_CLIENT_SECRET || "";
+const cognitoClientId = awsConfig?.custom?.userPoolClientId || process.env.COGNITO_CLIENT_ID || "";
+const cognitoClientSecret = awsConfig?.custom?.token || process.env.COGNITO_CLIENT_SECRET || "";
 const cognitoUserPoolId = awsConfig?.auth?.user_pool_id || process.env.COGNITO_USER_POOL_ID || "";
 const cognitoRegion = awsConfig?.auth?.aws_region || 'us-east-1';
 
