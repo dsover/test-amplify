@@ -9,11 +9,11 @@ interface ModifyAuthStackProps extends cdk.StackProps {
     userPoolId?: string;
 }
 
-export class ModifyAuthStack extends cdk.Stack {
+export class ModifyAuthStack extends Construct {
     public readonly userPoolClient: CfnUserPoolClient;
     constructor(scope: Construct, id: string, props: ModifyAuthStackProps) {
-        super(scope, id, props);
-
+        super(scope, id);
+        console.log('props', props);
         // Use Lazy.string to resolve userPoolId lazily at deploy-time
         const userPoolId = Lazy.string({
             produce: () => {
