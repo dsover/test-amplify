@@ -21,10 +21,12 @@ export default function LoginPage() {
 
     const router = useRouter();
     const searchParams = useSearchParams();
-    
+
     useEffect(() => {
-        const url = searchParams?.get("callbackUrl");
-        setCallbackUrl(url || "/");
+        if (typeof window !== "undefined") {
+            const url = searchParams?.get("callbackUrl");
+            setCallbackUrl(url || "/");
+        }
     }, [searchParams]);
 
     const login = async (u: string, p: string) => {
@@ -40,7 +42,7 @@ export default function LoginPage() {
             callbackUrl: callbackUrl,
             redirect: false,
         });
-        
+
         console.log("response", response);
 
         if (response?.ok) {
