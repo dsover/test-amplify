@@ -1,7 +1,7 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-// import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
@@ -9,6 +9,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [loginError, setLoginError] = useState("");
+    const [callbackUrl, setCallbackUrl] = useState("/");
 
     const [newPasswordRequired, setNewPasswordRequired] = useState(false);
     const [newPasswordInput, setNewPasswordInput] = useState("");
@@ -19,7 +20,12 @@ export default function LoginPage() {
     const [resetCodeInput, setResetCodeInput] = useState("");
 
     const router = useRouter();
-    // const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
+    
+    useEffect(() => {
+        const url = searchParams?.get("callbackUrl");
+        setCallbackUrl(url || "/");
+    }, [searchParams]);
 
     const login = async (u: string, p: string) => {
         console.log("login", u, p);
@@ -31,9 +37,10 @@ export default function LoginPage() {
         const response = await signIn("credentials", {
             username: u.toLowerCase(),
             password: p,
-            callbackUrl: "/", //searchParams.get("callbackUrl") || "/",
+            callbackUrl: callbackUrl,
             redirect: false,
         });
+        
         console.log("response", response);
 
         if (response?.ok) {
