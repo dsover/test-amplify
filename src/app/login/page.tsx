@@ -1,8 +1,22 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+
+
+function LazySearchParams({ setCallbackUrl }: { setCallbackUrl: (url: string) => void }) {
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        if (searchParams) {
+            const url = searchParams.get("callbackUrl");
+            setCallbackUrl(url || "/");
+        }
+    }, [searchParams, setCallbackUrl]);
+
+    return null;
+}
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
@@ -20,15 +34,7 @@ export default function LoginPage() {
     const [resetCodeInput, setResetCodeInput] = useState("");
 
     const router = useRouter();
-    const searchParams = useSearchParams();
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const url = searchParams?.get("callbackUrl");
-            setCallbackUrl(url || "/");
-        }
-    }, [searchParams]);
-
+    
     const login = async (u: string, p: string) => {
         console.log("login", u, p);
         if (!u || !p) {
@@ -196,6 +202,10 @@ export default function LoginPage() {
 
     return (
         <div>
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazySearchParams setCallbackUrl={setCallbackUrl} />
+            </Suspense>
+
             <div>
                 <div>
                     <div>
