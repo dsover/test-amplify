@@ -23,5 +23,3 @@ backend.addOutput({
     token: customNotifications.userPoolClient.attrClientSecret
   }
 })
-console.log(backend.stack)
-console.log(backend)
