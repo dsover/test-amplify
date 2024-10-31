@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from '@/app/lib/auth-options';
-import { signOut } from "next-auth/react";
+import SignOutButton from "@/app/components/sign-out-button";
+
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -10,7 +11,7 @@ export default async function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <pre>{session?.user ? JSON.stringify(session?.user, null, 2) : "Not signed in"}</pre>
       <br/>
-      <button onClick={() => signOut()}>sign out</button>
+      <SignOutButton></SignOutButton>
       <br/>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
