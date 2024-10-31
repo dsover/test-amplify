@@ -60,9 +60,6 @@ export async function middleware(request: NextRequest) {
     if (!session) {
         const callbackUrl = `${protocol}//${currentHost}${pathname}`;
         const newPathName = `/login?callbackUrl=${encodeURIComponent(callbackUrl)}`;
-        // const newPathName = `/login?callbackUrl=${encodeURIComponent(
-        //     process.env.NEXTAUTH_URL + pathname
-        // )}`;
         return NextResponse.redirect(new URL(newPathName, request.url));
     }
 

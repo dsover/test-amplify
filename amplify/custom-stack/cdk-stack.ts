@@ -2,9 +2,8 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CfnUserPoolClient } from "aws-cdk-lib/aws-cognito";
 // import { Lazy } from "aws-cdk-lib";
-// import { readFileSync } from "fs";
-// import * as path from "path";
-
+import * as fs from "fs";
+import * as path from "path";
 interface ModifyAuthStackProps extends cdk.StackProps {
     userPoolId: string;
 }
@@ -31,11 +30,18 @@ export class ModifyAuthStack extends Construct {
         //         return amplifyMeta.auth.user_pool_id;
         //     },
         // });
+        const amplifyMeta = JSON.parse(
+            fs.readFileSync(path.resolve(__dirname, "../../amplify_outputs.json"), "utf8")
+        );
+        
+        const appUrl = amplifyMeta['main'].hosting.url; 
+
         // Modify the User Pool Client with callback URLs
         this.userPoolClient = new CfnUserPoolClient(this, "UserPoolClient", {
             userPoolId: userPoolId, // Use the User Pool ID from Amplify
             generateSecret: true,
             callbackUrLs: [
+                `${appUrl}/api/auth/callback/cognito`,
                 "http://localhost:3000/api/auth/callback/cognito",
                 "https://yourproductiondomain.com/api/auth/callback/cognito",
             ],
