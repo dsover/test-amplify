@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { CfnUserPoolClient } from "aws-cdk-lib/aws-cognito";
+import { CfnUserPoolClient, CfnUserPoolGroup } from "aws-cdk-lib/aws-cognito";
 // import { Lazy } from "aws-cdk-lib";
 // import * as fs from "fs";
 // import * as path from "path";
@@ -58,6 +58,12 @@ export class ModifyAuthStack extends Construct {
                 "ALLOW_REFRESH_TOKEN_AUTH",
                 "ALLOW_CUSTOM_AUTH",
             ],
+        });
+        new CfnUserPoolGroup(this, "AdminsGroup", {
+            userPoolId: userPoolId,
+            description: "Admins group",
+            precedence: 1,
+            groupName: "Admins",
         });
     }
 }
