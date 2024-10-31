@@ -12,7 +12,7 @@ frontend:
         - npm ci
     build:
       commands:
-        node -e "console.log('NEXTAUTH_SECRET=' + require('crypto').randomBytes(32).toString('base64'))" > .env
+        - node -e "console.log('NEXTAUTH_SECRET=' + require('crypto').randomBytes(32).toString('base64'))" > .env
         - echo "NEXTAUTH_URL=https://$AWS_BRANCH.$AWS_APP_ID.amplifyapp.com" >> .env
         - npm run build
         - ls -la
