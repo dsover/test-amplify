@@ -49,16 +49,20 @@ export async function middleware(request: NextRequest) {
     console.log('first')
     const pathname = request.nextUrl.pathname;
 
-    const session: any = await getToken({
+    const session = await getToken({
         req: request,
         secret: process.env.NEXTAUTH_SECRET,
     });
 
+    const currentHost = request.headers.get("host");
+    const protocol = request.nextUrl.protocol;
     // redirect user in ui that's not logged in to login page
     if (!session) {
-        const newPathName = `/login?callbackUrl=${encodeURIComponent(
-            process.env.NEXTAUTH_URL + pathname
-        )}`;
+        const callbackUrl = `${protocol}//${currentHost}${pathname}`;
+        const newPathName = `/login?callbackUrl=${encodeURIComponent(callbackUrl)}`;
+        // const newPathName = `/login?callbackUrl=${encodeURIComponent(
+        //     process.env.NEXTAUTH_URL + pathname
+        // )}`;
         return NextResponse.redirect(new URL(newPathName, request.url));
     }
 
